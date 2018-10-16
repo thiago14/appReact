@@ -1,26 +1,37 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, FlatList, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 
-// import {  } from '../actions'
+import SerieCard from '../components/SerieCard'
+
+import series from '../../series.json'
 
 export class SeriesPage extends Component {
-
   render() {
     return (
       <View>
-        <Text> textInComponent </Text>
+        <FlatList
+          data={[...series, { isLast: true }]}
+          renderItem={({item, index}) => (
+            item.isLast
+            ? <View><Text>Add New</Text></View>
+            : <SerieCard serie={item} />
+          )}
+          keyExtractor={item => item.id}
+          numColumns={2}
+        />
       </View>
     )
   }
 }
 
-const mapStateToProps = (state) => ({
+const styles = StyleSheet.create({})
 
-})
+const mapStateToProps = state => ({})
 
-const mapDispatchToProps = {
+const mapDispatchToProps = {}
 
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SeriesPage)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SeriesPage)

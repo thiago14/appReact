@@ -1,5 +1,7 @@
 import { createStackNavigator } from 'react-navigation'
+
 import LoginPage from './pages/Login';
+import SeriesPage from './pages/SeriesPage'
 
 export default createStackNavigator({
   'Login': {
@@ -8,7 +10,10 @@ export default createStackNavigator({
       title: 'Bem vindo!',
       alignContent: 'center'
     }
-  }
+  },
+  'Main': {
+    screen: SeriesPage
+  },
 }, {
   navigationOptions: {
     title: 'Series',

@@ -5,7 +5,8 @@ export default createStackNavigator({
   'Login': {
     screen: LoginPage,
     navigationOptions: {
-      title: 'Bem vindo!'
+      title: 'Bem vindo!',
+      alignContent: 'center'
     }
   }
 }, {
@@ -15,7 +16,6 @@ export default createStackNavigator({
       backgroundColor: '#6ca2f7',
       borderBottomWidth: 1,
       borderBottomColor: '#c5c5c5',
-      alignContent: 'center'
     },
     headerTitleStyle: {
       color: 'white',

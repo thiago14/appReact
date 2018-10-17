@@ -16,11 +16,18 @@ export default createStackNavigator({
     screen: SeriesPage
   },
   'SerieDetail': {
-    screen: SerieDetailPage
+    screen: SerieDetailPage,
+    navigationOptions: ({ navigation }) => {
+      const { serie } = navigation.state.params
+      return {
+        title: serie.title
+      }
+    }
   },
 }, {
   navigationOptions: {
     title: 'Series',
+    headerTintColor: 'white',
     headerStyle: {
       backgroundColor: '#6ca2f7',
       borderBottomWidth: 1,

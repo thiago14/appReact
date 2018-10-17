@@ -14,9 +14,11 @@ const SerieCard = ({ serie, isFirstColumn, onPress }) => (
     style={[ styles.container, isFirstColumn ]}
   >
     <View style={styles.card}>
-      {serie.img ? (
-        <Image source={{ uri: serie.img }} aspectRatio={1} resizeMode="cover" />
-      ) : null}
+      {
+        serie.img
+        ? <Image source={{ uri: serie.img }} aspectRatio={1} resizeMode="cover" />
+        : null
+      }
       <View style={styles.cardTitleWrapper}>
         <Text adjustsFontSizeToFit textBreakStrategy="highQuality" style={styles.cardTitle}>{serie.title}</Text>
       </View>

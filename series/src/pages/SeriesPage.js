@@ -13,8 +13,9 @@ const isEven = number => {
     return { paddingRight: 10 }
 }
 
-export class SeriesPage extends Component {
+class SeriesPage extends Component {
   render() {
+    const { navigation } = this.props
     return (
       <View>
         <FlatList
@@ -22,7 +23,11 @@ export class SeriesPage extends Component {
           renderItem={({item, index}) => (
             item.isLast
             ? <AddSerieCard isFirstColumn={isEven(index)} />
-            : <SerieCard isFirstColumn={isEven(index)} serie={item} />
+            : <SerieCard
+                isFirstColumn={isEven(index)}
+                serie={item}
+                onPress={() => navigation.navigate('SerieDetail', { serie: item })}
+              />
           )}
           keyExtractor={item => item.id}
           numColumns={2}

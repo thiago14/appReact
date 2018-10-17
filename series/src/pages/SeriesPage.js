@@ -3,10 +3,15 @@ import { View, Text, FlatList, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 
 import SerieCard from '../components/SerieCard'
+import AddSerieCard from '../components/AddSerieCard'
 
 import series from '../../series.json'
 
-const isEven = number => number % 2 === 0
+const isEven = number => {
+    if(number % 2 === 0)
+      return { paddingLeft: 10 }
+    return { paddingRight: 10 }
+}
 
 export class SeriesPage extends Component {
   render() {
@@ -16,7 +21,7 @@ export class SeriesPage extends Component {
           data={[...series, { isLast: true }]}
           renderItem={({item, index}) => (
             item.isLast
-            ? <View><Text>Add New</Text></View>
+            ? <AddSerieCard isFirstColumn={isEven(index)} />
             : <SerieCard isFirstColumn={isEven(index)} serie={item} />
           )}
           keyExtractor={item => item.id}

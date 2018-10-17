@@ -11,10 +11,7 @@ import {
 const SerieCard = ({ serie, isFirstColumn, onPress }) => (
   <TouchableOpacity
     onPress={onPress}
-    style={[
-      styles.container,
-      isFirstColumn ? styles.firstColumn : styles.lastColumn
-    ]}
+    style={[ styles.container, isFirstColumn ]}
   >
     <View style={styles.card}>
       {serie.img ? (
@@ -54,12 +51,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 15,
     fontWeight: 'bold'
-  },
-  firstColumn: {
-    paddingLeft: 10
-  },
-  lastColumn: {
-    paddingRight: 10
   }
 })
 

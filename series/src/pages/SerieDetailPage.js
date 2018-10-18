@@ -3,6 +3,7 @@ import { ScrollView, Image, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 
 import Row from "../components/Row"
+import LongText from "../components/LongText"
 
 class SerieDetailPage extends Component {
   render() {
@@ -18,7 +19,7 @@ class SerieDetailPage extends Component {
         <Row label="Titulo" content={serie.title} />
         <Row label="Gênero" content={serie.gender} />
         <Row label="Nota" content={serie.rate} />
-        <Row label="Descrição" content={serie.description} />
+        <LongText label="Descrição" content={serie.description} />
       </ScrollView>
     )
   }

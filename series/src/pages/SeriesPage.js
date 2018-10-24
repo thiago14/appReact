@@ -22,7 +22,10 @@ class SeriesPage extends Component {
           data={[...series, { isLast: true }]}
           renderItem={({item, index}) => (
             item.isLast
-            ? <AddSerieCard isFirstColumn={isEven(index)} />
+            ? <AddSerieCard
+                isFirstColumn={isEven(index)}
+                onPress={() => navigation.navigate('SerieFormPage')}
+              />
             : <SerieCard
                 isFirstColumn={isEven(index)}
                 serie={item}

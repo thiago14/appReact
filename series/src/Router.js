@@ -3,6 +3,7 @@ import { createStackNavigator } from 'react-navigation'
 import LoginPage from './pages/Login';
 import SeriesPage from './pages/SeriesPage'
 import SerieDetailPage from './pages/SerieDetailPage'
+import SerieFormPage from './pages/SerieFormPage'
 
 export default createStackNavigator({
   'Login': {
@@ -14,6 +15,9 @@ export default createStackNavigator({
   },
   'Main': {
     screen: SeriesPage
+  },
+  'SerieFormPage': {
+    screen: SerieFormPage
   },
   'SerieDetail': {
     screen: SerieDetailPage,

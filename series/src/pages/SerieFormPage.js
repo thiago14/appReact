@@ -13,34 +13,19 @@ import { connect } from 'react-redux'
 
 import FormRow from '../components/FormRow'
 
-// import {  } from '../actions'
+import { setField, resetForm } from '../actions'
 
 class SerieFormPage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        isLoading: false,
-        serieForm: {
-          title: '',
-          rate: null,
-          img: '',
-          gender: '',
-          description: '',
-        }
+      isLoading: false,
     }
   }
 
-  setField(field, value) {
-    this.setState({
-      serieForm: {
-        [field]: value
-      }
-    })
-  }
-
   render() {
-    const { serieForm } = this.state
+    const { serieForm, setField } = this.props
     return (
       <ScrollView>
           <FormRow>
@@ -48,7 +33,7 @@ class SerieFormPage extends Component {
                 style={styles.input}
                 placeholder="Título"
                 value={serieForm.title}
-                onChangeText={value => this.setField('title', value)}
+                onChangeText={value => setField('title', value)}
               />
           </FormRow>
           <FormRow>
@@ -56,13 +41,13 @@ class SerieFormPage extends Component {
                 style={styles.input}
                 placeholder="Url da imagem"
                 value={serieForm.img}
-                onChangeText={value => this.setField('img', value)}
+                onChangeText={value => setField('img', value)}
               />
           </FormRow>
           <FormRow>
               <Picker
                 selectedValue={serieForm.gender}
-                onValueChange={itemValue => this.setField('gender', itemValue)}
+                onValueChange={itemValue => setField('gender', itemValue)}
               >
                 <Picker.Item label="Policial" value="Policial" />
                 <Picker.Item label="Comédia" value="Comédia" />
@@ -75,7 +60,7 @@ class SerieFormPage extends Component {
                 <Text>{serieForm.rate}</Text>
               </View>
               <Slider
-                onValueChange={value => this.setField('rate', value)}
+                onValueChange={value => setField('rate', value)}
                 value={serieForm.rate}
                 minimumValue={0}
                 maximumValue={100}
@@ -87,7 +72,7 @@ class SerieFormPage extends Component {
                 style={styles.input}
                 placeholder="Descrição"
                 value={serieForm.description}
-                onChangeText={value => this.setField('description', value)}
+                onChangeText={value => setField('description', value)}
                 numberOfLines={4}
                 multiline
               />
@@ -122,7 +107,10 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  setField,
+  resetForm
+}
 
 export default connect(
   mapStateToProps,

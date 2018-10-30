@@ -1,6 +1,6 @@
 import { createStackNavigator } from 'react-navigation'
 
-import LoginPage from './pages/Login';
+import LoginPage from './pages/LoginPage';
 import SeriesPage from './pages/SeriesPage'
 import SerieDetailPage from './pages/SerieDetailPage'
 import SerieFormPage from './pages/SerieFormPage'

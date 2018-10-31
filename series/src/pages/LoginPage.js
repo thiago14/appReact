@@ -7,8 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator
 } from 'react-native'
-import firebase from 'firebase'
-import config from '../../config.json'
+import { tryLogin, initializeFirebase } from '../actions';
 
 import { connect } from 'react-redux'
 import FormRow from '../components/FormRow'
@@ -19,14 +18,10 @@ class LoginPage extends Component {
 
     this.state = {
       email: '',
-      password: '',
       message: '',
+      password: '',
       isLoading: false
     }
-  }
-
-  componentDidMount() {
-    firebase.initializeApp(config)
   }
 
   onChangeHandler(field, value) {
@@ -35,24 +30,28 @@ class LoginPage extends Component {
     })
   }
 
+  componentDidMount() {
+    initializeFirebase()
+  }
+
   tryLogin() {
-    const { email, password } = this.state
     this.setState({
-      message: 'Sucesso',
+      message: '',
       isLoading: true
     })
-    firebase.auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(user => {
+    this.props.tryLogin(this.state)
+    .then(user => {
         this.setState({
+          message: 'Sucesso',
           isLoading: false
         })
-        this.props.navigation.replace('Main')
+        if(user) {
+          this.props.navigation.replace('Main')
+        }
       })
       .catch(error => {
         this.setState({
           message: this.getErrorMessage(error.code),
-          // message: error.message,
           isLoading: false
         })
       })
@@ -132,7 +131,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(
-  null,
-  null
-)(LoginPage)
+export default connect(null, { tryLogin })(LoginPage)

@@ -8,12 +8,13 @@ import {
   TextInput,
   StyleSheet,
   ScrollView,
+  KeyboardAvoidingView,
 } from 'react-native'
 import { connect } from 'react-redux'
 
 import FormRow from '../components/FormRow'
 
-import { setField, resetForm } from '../actions'
+import { setField, resetForm, saveSerie } from '../actions'
 
 class SerieFormPage extends Component {
   constructor(props) {
@@ -27,7 +28,12 @@ class SerieFormPage extends Component {
   render() {
     const { serieForm, setField } = this.props
     return (
-      <ScrollView>
+      // <KeyboardAvoidingView
+      //   keyboardVerticalOffset={150}
+      //   behavior="padding"
+      //   enabled
+      // >
+        <ScrollView>
           <FormRow>
               <TextInput
                 style={styles.input}
@@ -79,9 +85,10 @@ class SerieFormPage extends Component {
           </FormRow>
           <Button
             title="Salvar"
-            onPress={()=>console.log('salvo')}
+            onPress={()=>saveSerie(serieForm)}
           />
       </ScrollView>
+      // </KeyboardAvoidingView>
     )
   }
 }

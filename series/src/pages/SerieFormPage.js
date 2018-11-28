@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import {
   Text,
   View,
+  Alert,
   Button,
   Picker,
   Slider,
   TextInput,
   StyleSheet,
   ScrollView,
+  ActivityIndicator,
   KeyboardAvoidingView,
 } from 'react-native'
 import { connect } from 'react-redux'
@@ -25,14 +27,41 @@ class SerieFormPage extends Component {
     }
   }
 
+  async saveForm() {
+    this.setState({ isLoading: true })
+    try {
+      const { saveSerie, serieForm, navigation } = this.props;
+      await saveSerie(serieForm);
+      navigation.goBack();
+    }
+    catch(error) {
+      Alert.alert('Erro!', error.message);
+    }
+    finally {
+      this.setState({ isLoading: false })
+    }
+  }
+
+  renderButton() {
+    if(this.state.isLoading) {
+      return <ActivityIndicator/>
+    }
+    return (
+      <Button
+        title="Salvar"
+        onPress={() => this.saveForm() }
+      />
+    )
+  }
+
   render() {
     const { serieForm, setField } = this.props
     return (
-      // <KeyboardAvoidingView
-      //   keyboardVerticalOffset={150}
-      //   behavior="padding"
-      //   enabled
-      // >
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={150}
+        behavior="padding"
+        enabled
+      >
         <ScrollView>
           <FormRow>
               <TextInput
@@ -83,12 +112,9 @@ class SerieFormPage extends Component {
                 multiline
               />
           </FormRow>
-          <Button
-            title="Salvar"
-            onPress={()=>saveSerie(serieForm)}
-          />
+          { this.renderButton() }
       </ScrollView>
-      // </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
     )
   }
 }
@@ -116,7 +142,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   setField,
-  resetForm
+  resetForm,
+  saveSerie
 }
 
 export default connect(

@@ -40,7 +40,7 @@ class LoginPage extends Component {
       isLoading: true
     })
     this.props.tryLogin(this.state)
-    .then(user => {
+      .then(user => {
         this.setState({
           message: 'Sucesso',
           isLoading: false

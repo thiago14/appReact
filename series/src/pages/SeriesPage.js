@@ -5,8 +5,6 @@ import { connect } from 'react-redux'
 import SerieCard from '../components/SerieCard'
 import AddSerieCard from '../components/AddSerieCard'
 
-import series from '../../series.json'
-
 const isEven = number => {
     if(number % 2 === 0)
       return { paddingLeft: 10 }
@@ -15,7 +13,7 @@ const isEven = number => {
 
 class SeriesPage extends Component {
   render() {
-    const { navigation } = this.props
+    const { series, navigation } = this.props
     return (
       <View>
         <FlatList
@@ -51,7 +49,9 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+  series: state.series
+})
 
 const mapDispatchToProps = {}
 

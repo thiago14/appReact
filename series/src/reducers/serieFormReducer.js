@@ -1,4 +1,4 @@
-import { SET_FIELD, RESET_FORM } from "../actions"
+import { SET_FIELD, RESET_FORM, SERIE_SAVED_SUCCESS } from "../actions"
 
 const INITIAL_STATE = {
     id: null,
@@ -15,6 +15,7 @@ export default (state = INITIAL_STATE, action) => {
             const newState = {...state}
             newState[action.field] = action.value
             return newState
+        case SERIE_SAVED_SUCCESS:
         case RESET_FORM:
             return INITIAL_STATE
         default:

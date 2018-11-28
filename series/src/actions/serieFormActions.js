@@ -9,6 +9,11 @@ export const setField = (field, value) => {
   }
 }
 
+export const SERIE_SAVED_SUCCESS = 'SERIE_SAVED_SUCCESS'
+const serieSavedSuccess = () => ({
+  type: SERIE_SAVED_SUCCESS
+})
+
 export const RESET_FORM = 'RESET_FORM'
 export const resetForm = () => ({
   type: RESET_FORM
@@ -21,4 +26,5 @@ export const saveSerie = serie => {
             .database()
             .ref(`/users/${currentUser.uid}/series`)
             .push(serie)}
+        dispatch(serieSavedSuccess())
 }

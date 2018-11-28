@@ -113,7 +113,7 @@ class SerieFormPage extends Component {
               />
           </FormRow>
           { this.renderButton() }
-      </ScrollView>
+        </ScrollView>
       </KeyboardAvoidingView>
     )
   }

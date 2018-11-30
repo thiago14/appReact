@@ -87,6 +87,8 @@ class SerieFormPage extends Component {
                 <Picker.Item label="Policial" value="Policial" />
                 <Picker.Item label="Comédia" value="Comédia" />
                 <Picker.Item label="Terror" value="Terror" />
+                <Picker.Item label="Drama" value="Drama" />
+                <Picker.Item label="Ficção Científica" value="Ficção Científica" />
               </Picker>
           </FormRow>
           <FormRow>

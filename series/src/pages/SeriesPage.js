@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList, StyleSheet } from 'react-native'
+import { View, ActivityIndicator, FlatList, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 
 import SerieCard from '../components/SerieCard'
 import AddSerieCard from '../components/AddSerieCard'
+import { watchSeries } from '../actions'
 
 const isEven = number => {
     if(number % 2 === 0)
@@ -12,8 +13,16 @@ const isEven = number => {
 }
 
 class SeriesPage extends Component {
+  componentDidMount() {
+    this.props.watchSeries()
+  }
+
   render() {
     const { series, navigation } = this.props
+
+    if(series == null) {
+      return <ActivityIndicator/>
+    }
     return (
       <View>
         <FlatList
@@ -49,13 +58,19 @@ const styles = StyleSheet.create({
     }
 })
 
-const mapStateToProps = state => ({
-  series: state.series
-})
-
-const mapDispatchToProps = {}
+const mapStateToProps = state => {
+  const { series } = state
+  if(series === null) {
+    return { series }
+  }
+  const keys = Object.keys(series)
+  const newSeries = keys.map(id => {
+    return { ...series[id], id }
+  })
+  return { series: newSeries }
+}
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { watchSeries }
 )(SeriesPage)

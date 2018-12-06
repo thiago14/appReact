@@ -17,7 +17,13 @@ export default createStackNavigator({
     screen: SeriesPage
   },
   'SerieFormPage': {
-    screen: SerieFormPage
+    screen: SerieFormPage,
+    navigationOptions: ({ navigation }) => {
+      if ( navigation.state.params && navigation.state.params.serieToEdit ) {
+        return { title: 'Editar série' }
+      }
+      return { title: 'Nova série' }
+    }
   },
   'SerieDetail': {
     screen: SerieDetailPage,

@@ -1,5 +1,11 @@
 import firebase from 'firebase'
 
+export const SET_FORM_EDIT_SERIE = 'SET_FORM_EDIT_SERIE'
+export const setFormEditSerie = serie => ({
+    type: SET_FORM_EDIT_SERIE,
+    serie
+})
+
 export const SET_FIELD = 'SET_FIELD'
 export const setField = (field, value) => {
   return {
@@ -22,9 +28,18 @@ export const resetForm = () => ({
 export const saveSerie = serie => {
   const { currentUser } = firebase.auth()
   return async dispatch => {
-    await firebase
-            .database()
-            .ref(`/users/${currentUser.uid}/series`)
-            .push(serie)}
-        dispatch(serieSavedSuccess())
+    const db = firebase.database()
+    if(serie.id) {
+      await db
+          .ref(`/users/${currentUser.uid}/series/${serie.id}`)
+          .set(serie)
+    } else {
+      await db
+          .ref(`/users/${currentUser.uid}/series`)
+          .push(serie)
+    }
+    dispatch(serieSavedSuccess())
+  }
+}
+
 }

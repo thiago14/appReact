@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { ScrollView, Image, StyleSheet, Button } from 'react-native'
+import { View, ScrollView, Image, StyleSheet, Button } from 'react-native'
+
 import { connect } from 'react-redux'
+import { deleteSerie } from '../actions'
 
 import Row from "../components/Row"
 import LongText from "../components/LongText"
@@ -20,10 +22,25 @@ class SerieDetailPage extends Component {
         <Row label="Gênero" content={serie.gender} />
         <Row label="Nota" content={serie.rate} />
         <LongText label="Descrição" content={serie.description} />
-        <Button
-          title="Editar"
-          onPress={ () => navigation.navigate('SerieFormPage', { serieToEdit: serie }) }
-        />
+        <View style={styles.button}>
+          <Button
+            title="Editar"
+            onPress={ () => navigation.replace('SerieFormPage', { serieToEdit: serie }) }
+          />
+        </View>
+        <View style={styles.button}>
+          <Button
+            title="Delete"
+            color="#FF0004"
+            onPress={ async () => {
+                const hasDeleted = await this.props.deleteSerie(serie)
+                if (hasDeleted) {
+                  navigation.goBack()
+                }
+              }
+            }
+          />
+        </View>
       </ScrollView>
     )
   }
@@ -32,14 +49,10 @@ class SerieDetailPage extends Component {
 const styles = StyleSheet.create({
   image: {
     aspectRatio: 1
+  },
+  button: {
+    margin: 10
   }
 })
 
-const mapStateToProps = state => ({})
-
-const mapDispatchToProps = {}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SerieDetailPage)
+export default connect( null, { deleteSerie } )(SerieDetailPage)

@@ -22,24 +22,26 @@ class SerieDetailPage extends Component {
         <Row label="Gênero" content={serie.gender} />
         <Row label="Nota" content={serie.rate} />
         <LongText label="Descrição" content={serie.description} />
-        <View style={styles.button}>
-          <Button
-            title="Editar"
-            onPress={ () => navigation.replace('SerieFormPage', { serieToEdit: serie }) }
-          />
-        </View>
-        <View style={styles.button}>
-          <Button
-            title="Delete"
-            color="#FF0004"
-            onPress={ async () => {
-                const hasDeleted = await this.props.deleteSerie(serie)
-                if (hasDeleted) {
-                  navigation.goBack()
+        <View style={styles.buttonWrapper}>
+          <View style={styles.button}>
+            <Button
+              title="Editar"
+              onPress={ () => navigation.replace('SerieFormPage', { serieToEdit: serie }) }
+            />
+          </View>
+          <View style={styles.button}>
+            <Button
+              title="Delete"
+              color="#FF0004"
+              onPress={ async () => {
+                  const hasDeleted = await this.props.deleteSerie(serie)
+                  if (hasDeleted) {
+                    navigation.goBack()
+                  }
                 }
               }
-            }
-          />
+            />
+          </View>
         </View>
       </ScrollView>
     )
@@ -50,8 +52,13 @@ const styles = StyleSheet.create({
   image: {
     aspectRatio: 1
   },
+  buttonWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   button: {
-    margin: 10
+    margin: 10,
+    width: '40%',
   }
 })
 

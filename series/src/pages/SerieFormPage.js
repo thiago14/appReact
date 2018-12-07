@@ -68,8 +68,7 @@ class SerieFormPage extends Component {
       <KeyboardAvoidingView
         keyboardVerticalOffset={150}
         behavior="padding"
-        enabled
-      >
+        enabled>
         <ScrollView>
           <FormRow>
               <TextInput

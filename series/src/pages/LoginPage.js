@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import {
   Text,
   View,
+  Alert,
   Button,
   TextInput,
   StyleSheet,
   ActivityIndicator
 } from 'react-native'
-import { tryLogin, initializeFirebase } from '../actions';
+import { tryLogin, register, initializeFirebase } from '../actions';
 
 import { connect } from 'react-redux'
 import FormRow from '../components/FormRow'
@@ -34,27 +35,49 @@ class LoginPage extends Component {
     initializeFirebase()
   }
 
+  success(user) {
+    this.setState({
+      message: 'Sucesso',
+      isLoading: false
+    })
+    if(user) {
+      this.props.navigation.replace('Main')
+    }
+  }
+
+  error(error) {
+    this.setState({
+      message: this.getErrorMessage(error.code),
+      isLoading: false
+    })
+  }
+
   tryLogin() {
     this.setState({
       message: '',
       isLoading: true
     })
     this.props.tryLogin(this.state)
-      .then(user => {
-        this.setState({
-          message: 'Sucesso',
-          isLoading: false
-        })
-        if(user) {
-          this.props.navigation.replace('Main')
-        }
+      .then(user => this.success(user))
+      .catch(error => this.error(error))
+  }
+
+  register() {
+    if(
+      (this.state.email && this.state.email !== '') &&
+      (this.state.password && this.state.password !== '')
+    ) {
+      this.setState({
+        message: '',
+        isLoading: true
       })
-      .catch(error => {
-        this.setState({
-          message: this.getErrorMessage(error.code),
-          isLoading: false
-        })
-      })
+      return this.props.register(this.state)
+        .then(user => this.success(user))
+        .catch(error => this.error(error))
+    }
+    return (
+      Alert.alert('Preencha os campos "E-mail" e "Senha"!')
+    )
   }
 
   getErrorMessage(code) {
@@ -73,7 +96,11 @@ class LoginPage extends Component {
   renderMessage() {
     const { message } = this.state
     if(message) {
-      return <View><Text>{ message }</Text></View>
+      return (
+        <View style={styles.messageWrapper}>
+          <Text style={styles.message}>{ message }</Text>
+        </View>
+      )
     }
     return null
   }
@@ -83,8 +110,13 @@ class LoginPage extends Component {
       return <ActivityIndicator/>
     }
     return (
-      <View style={styles.button}>
-        <Button title="Entrar" onPress={() => this.tryLogin()} />
+      <View>
+        <View style={styles.button}>
+          <Button title="Entrar" onPress={() => this.tryLogin()} />
+        </View>
+        <View style={styles.button}>
+          <Button title="Cadastrar" onPress={() => this.register()} />
+        </View>
       </View>
     )
   }
@@ -92,6 +124,7 @@ class LoginPage extends Component {
   render() {
     return (
       <View style={styles.container}>
+        { this.renderMessage() }
         <FormRow>
           <TextInput
             style={styles.input}
@@ -111,7 +144,6 @@ class LoginPage extends Component {
           />
         </FormRow>
         { this.renderButton() }
-        { this.renderMessage() }
       </View>
     )
   }
@@ -128,7 +160,18 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 10
+  },
+  messageWrapper: {
+    backgroundColor: '#FF0004',
+    marginTop: 20,
+    marginBottom: 20,
+    padding: 10,
+    width: '100%'
+  },
+  message: {
+    textAlign: 'center',
+    color: 'white'
   }
 })
 
-export default connect(null, { tryLogin })(LoginPage)
+export default connect(null, { tryLogin, register })(LoginPage)

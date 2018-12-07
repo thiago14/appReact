@@ -24,3 +24,14 @@ export const tryLogin = ({email, password}) => dispatch => {
         return Promise.reject(error)
       })
 }
+
+export const register = ({email, password}) => dispatch => {
+  return new Promise((resolve, reject) => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(resolve)
+      .catch(reject)
+    }
+  )
+}

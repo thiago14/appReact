@@ -44,16 +44,14 @@ export const register = ({email, password}) => dispatch => {
 }
 
 export const logout = () => dispatch => {
-  return async () => {
-    try{
-      await firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          dispatch(userLogout())
-        })
-    } catch(e) {
-      return Promise.reject(error)
-    }
-  }
+  return firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        dispatch(userLogout())
+      })
+      .catch(error => {
+        return Promise.reject(error)
+      })
+
 }

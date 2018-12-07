@@ -17,8 +17,8 @@ class SeriesPage extends Component {
     return {
       headerRight: (
         <Button
-          onPress={() => {
-            navigation.state.params.logout()
+          onPress={async () => {
+            await navigation.state.params.logout()
             navigation.replace('Login')
           }}
           title="Logout"

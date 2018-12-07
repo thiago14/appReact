@@ -2,13 +2,20 @@ import firebase from 'firebase'
 import config from '../../config.json'
 
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS'
-export const userLoginSuccess = (user) => ({
+export const userLoginSuccess = user => ({
   type: USER_LOGIN_SUCCESS,
   user
 })
 
+export const USER_LOGOUT = 'USER_LOGOUT'
+export const userLogout = () => ({
+  type: USER_LOGOUT
+})
+
 export const initializeFirebase = () => {
-  firebase.initializeApp(config)
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config)
+  }
 }
 
 export const tryLogin = ({email, password}) => dispatch => {
@@ -34,4 +41,19 @@ export const register = ({email, password}) => dispatch => {
       .catch(reject)
     }
   )
+}
+
+export const logout = () => dispatch => {
+  return async () => {
+    try{
+      await firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          dispatch(userLogout())
+        })
+    } catch(e) {
+      return Promise.reject(error)
+    }
+  }
 }

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { View, ActivityIndicator, FlatList, StyleSheet } from 'react-native'
+import { View, Button, ActivityIndicator, FlatList, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 
 import SerieCard from '../components/SerieCard'
 import AddSerieCard from '../components/AddSerieCard'
-import { watchSeries } from '../actions'
+import { watchSeries, logout } from '../actions'
 
 const isEven = number => {
     if(number % 2 === 0)
@@ -13,8 +13,23 @@ const isEven = number => {
 }
 
 class SeriesPage extends Component {
+  static navigationOptions = ({navigation}) => {
+    return {
+      headerRight: (
+        <Button
+          onPress={() => {
+            navigation.state.params.logout()
+            navigation.replace('Login')
+          }}
+          title="Logout"
+          color="#fff"
+        />
+      )
+    }
+  }
   componentDidMount() {
     this.props.watchSeries()
+    this.props.navigation.setParams({ logout: this.props.logout });
   }
 
   render() {
@@ -72,5 +87,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { watchSeries }
+  { watchSeries, logout }
 )(SeriesPage)
